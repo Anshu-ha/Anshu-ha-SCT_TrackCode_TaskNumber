@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #333;
+        margin: 0;
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .container {
+        background-color: #ffffff08;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        animation: neon 2s infinite;
+      }
+      @keyframes neon {
+        0%,
+        100% {
+          border-image-source: linear-gradient(to right, white, white);
+          box-shadow: 0 0 15px white;
+        }
+        50% {
+          border-image-source: linear-gradient(to right, aqua, aqua);
+          box-shadow: 0 0 30px aqua;
+        }
+      }
+
+      h1 {
+        text-align: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        color: aqua;
+        background-color: black;
+        font-family: "Comic Sans MS", cursive;
+        display: inline-block;
+        border: 2px solid #ddd;
+      }
+
+      .input-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        animation: neon-border 2s infinite;
+      }
+      @keyframes neon-border {
+        0%,
+        100% {
+          border-image-source: linear-gradient(to right, aqua, aqua);
+          box-shadow: 0 0 15px aqua;
+        }
+        50% {
+          border-image-source: linear-gradient(to right, white, white);
+          box-shadow: 0 0 30px white;
+        }
+      }
+
+      input[type="text"],
+      input[type="datetime-local"] {
+        width: 60%;
+        padding: 10px;
+        margin-right: 10px;
+        border: 1px solid aqua;
+        border-radius: 3px;
+      }
+
+      button {
+        padding: 10px;
+        background-color: black;
+        color: #fff;
+        border: 2px solid aqua;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: rgba(210, 16, 49, 0);
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .completed {
+        text-decoration: line-through;
+        color: white;
+        background-color: greenyellow;
+      }
+
+      li button {
+        border: none;
+        color: white;
+        padding: 5px;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      li button:hover {
+        background-color: #c8233300;
+      }
+
+      li .edit {
+        background-color: aqua;
+        color: black;
+        margin-right: 5px;
+      }
+
+      li .edit:hover {
+        background-color: #e0a80001;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div><h1>TO Do list</h1></div>
+      <div class="input-container">
+        <input type="text" id="taskInput" placeholder="Add a new task..." />
+        <input type="datetime-local" id="taskDateTime" />
+        <button id="addTaskBtn">Add Task</button>
+      </div>
+      <ul id="taskList"></ul>
+    </div>
+    <script>
+      document.getElementById("addTaskBtn").addEventListener("click", addTask);
+
+      function addTask() {
+        const taskInput = document.getElementById("taskInput");
+        const taskDateTime = document.getElementById("taskDateTime");
+        const taskList = document.getElementById("taskList");
+
+        const taskText = taskInput.value.trim();
+        const taskDate = taskDateTime.value;
+
+        if (taskText === "" || taskDate === "") {
+          alert("Please enter a task and date/time");
+          return;
+        }
+
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+                <span>${taskText} (Due: ${new Date(
+          taskDate
+        ).toLocaleString()})</span>
+                <div>
+                    <button class="edit">Edit</button>
+                    <button class="complete">Complete</button>
+                    <button class="delete">Delete</button>
+                </div>
+            `;
+
+        taskList.appendChild(listItem);
+
+        taskInput.value = "";
+        taskDateTime.value = "";
+
+        listItem
+          .querySelector(".edit")
+          .addEventListener("click", () =>
+            editTask(listItem, taskText, taskDate)
+          );
+        listItem
+          .querySelector(".complete")
+          .addEventListener("click", () => completeTask(listItem));
+        listItem
+          .querySelector(".delete")
+          .addEventListener("click", () => deleteTask(listItem));
+      }
+
+      function editTask(listItem, oldText, oldDate) {
+        const newText = prompt("Edit task:", oldText);
+        const newDate = prompt("Edit date/time:", oldDate);
+
+        if (
+          newText !== null &&
+          newText.trim() !== "" &&
+          newDate !== null &&
+          newDate.trim() !== ""
+        ) {
+          listItem.querySelector(
+            "span"
+          ).innerText = `${newText} (Due: ${new Date(
+            newDate
+          ).toLocaleString()})`;
+        }
+      }
+
+      function completeTask(listItem) {
+        listItem.classList.toggle("completed");
+      }
+
+      function deleteTask(listItem) {
+        listItem.remove();
+      }
+    </script>
+  </body>
+</html>

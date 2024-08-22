@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display="
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: aqua;
+        margin: 0;
+        background-image: url("https://static.vecteezy.com/system/resources/previews/014/674/395/non_2x/neon-light-background-free-vector.jpg");
+        background-size: cover;
+      }
+
+      .game-container {
+        text-align: center;
+        background-color: rgba(0, 255, 255, 0.234);
+        width: 335px;
+
+        animation: neon-border 2s infinite;
+      }
+      @keyframes neon-border {
+        0%,
+        100% {
+          border-image-source: linear-gradient(
+            to right,
+            rgb(255, 0, 0),
+            rgba(0, 255, 255, 0.77)
+          );
+          box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
+        }
+        50% {
+          border-image-source: linear-gradient(
+            to right,
+            rgba(255, 192, 192, 0.929),
+            aqua
+          );
+          box-shadow: 0 0 30px rgba(0, 86, 179, 1);
+        }
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 5px;
+        margin: 20px auto;
+      }
+
+      .cell {
+        width: 100px;
+        height: 100px;
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        background-color: #33333300;
+        border: 2px solid pink;
+        cursor: pointer;
+        animation: pulse-border 2s infinite;
+      }
+      @keyframes pulse-border {
+        0% {
+          border: 2px solid #007bff;
+          box-shadow: 0 0 10px aqua;
+        }
+        50% {
+          border: 4px solid pink;
+          box-shadow: 0 0 20px palevioletred;
+        }
+        100% {
+          border: 2px solid #007bff;
+          box-shadow: 0 0 10px red;
+        }
+      }
+
+      .cell:hover {
+        background-color: rgba(255, 192, 239, 0.136);
+        animation: pulse-border 2s infinite;
+      }
+      @keyframes pulse-border {
+        0% {
+          border: 2px solid #007bff;
+          box-shadow: 0 0 10px aqua;
+        }
+        50% {
+          border: 4px solid pink;
+          box-shadow: 0 0 20px palevioletred;
+        }
+        100% {
+          border: 2px solid #007bff;
+          box-shadow: 0 0 10px red;
+        }
+      }
+      .cell.x {
+        color: yellow;
+        animation: flicker 2s infinite;
+      }
+
+      @keyframes flicker {
+        0%,
+        18%,
+        22%,
+        25%,
+        53%,
+        57%,
+        100% {
+          opacity: 1;
+          text-shadow: -0.5px -0.5px 0px #fff, -0.5px -0.5px 0px #fff,
+            0.5px 0.5px 0px #fff, 0.5px 0.5px 0px #fff;
+        }
+        20%,
+        24%,
+        55% {
+          opacity: 0.5;
+          text-shadow: none;
+        }
+        25% {
+          opacity: 0.3;
+          text-shadow: none;
+        }
+        58% {
+          opacity: 0.8;
+          text-shadow: -0.5px -0.5px 0px #fff, -0.5px -0.5px 0px #fff,
+            0.5px 0.5px 0px #fff, 0.5px 0.5px 0px #fff;
+        }
+      }
+
+      .cell.o {
+        color: rgb(231, 9, 46);
+        animation: flicker 2s infinite;
+      }
+
+      @keyframes flicker {
+        0%,
+        18%,
+        22%,
+        25%,
+        53%,
+        57%,
+        100% {
+          opacity: 1;
+          text-shadow: -0.5px -0.5px 0px #fff, -0.5px -0.5px 0px #fff,
+            0.5px 0.5px 0px #fff, 0.5px 0.5px 0px #fff;
+        }
+        20%,
+        24%,
+        55% {
+          opacity: 0.5;
+          text-shadow: none;
+        }
+        25% {
+          opacity: 0.3;
+          text-shadow: none;
+        }
+        58% {
+          opacity: 0.8;
+          text-shadow: -0.5px -0.5px 0px #fff, -0.5px -0.5px 0px #fff,
+            0.5px 0.5px 0px #fff, 0.5px 0.5px 0px #fff;
+        }
+      }
+
+      .status {
+        font-size: 1.2em;
+        margin: 10px 0;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(187, 7, 67, 0.382);
+        color: #fff;
+        cursor: pointer;
+        font-size: 1em;
+
+        animation: neonBorder 1.5s ease-in-out infinite alternate;
+      }
+
+      @keyframes neonBorder {
+        0% {
+          border-color: red;
+          box-shadow: 0 0 10px red;
+        }
+        100% {
+          border-color: bisque;
+          box-shadow: 0 0 20px bisque;
+        }
+      }
+
+      button:hover {
+        background-color: rgba(255, 255, 0, 0);
+        color: white;
+      }
+      .game-container,
+      h1 {
+        color: rgba(192, 255, 197, 0.799);
+        animation: flicker 2s infinite;
+      }
+
+      @keyframes flicker {
+        0%,
+        18%,
+        22%,
+        25%,
+        53%,
+        57%,
+        100% {
+          opacity: 1;
+          text-shadow: -0.5px -0.5px 0px #fff, -0.5px -0.5px 0px #fff,
+            0.5px 0.5px 0px #fff, 0.5px 0.5px 0px #fff;
+        }
+        20%,
+        24%,
+        55% {
+          opacity: 0.5;
+          text-shadow: none;
+        }
+        25% {
+          opacity: 0.3;
+          text-shadow: none;
+        }
+        58% {
+          opacity: 0.8;
+          text-shadow: -0.5px -0.5px 0px #fff, -0.5px -0.5px 0px #fff,
+            0.5px 0.5px 0px #fff, 0.5px 0.5px 0px #fff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>Tic Tac Toe</h1>
+      <div id="gameBoard" class="board">
+        <!-- Cells will be dynamically created here -->
+      </div>
+      <button id="restartBtn">Restart Game</button>
+      <div id="status" class="status">Player X's turn</div>
+    </div>
+    <script>
+      const board = document.getElementById("gameBoard");
+      const status = document.getElementById("status");
+      const restartBtn = document.getElementById("restartBtn");
+
+      let currentPlayer = "x";
+      let boardState = ["", "", "", "", "", "", "", "", ""];
+      let gameActive = true;
+
+      function createBoard() {
+        for (let i = 0; i < 9; i++) {
+          const cell = document.createElement("div");
+          cell.classList.add("cell");
+          cell.dataset.index = i;
+          cell.addEventListener("click", handleClick);
+          board.appendChild(cell);
+        }
+      }
+
+      function handleClick(event) {
+        const cell = event.target;
+        const index = cell.dataset.index;
+
+        if (boardState[index] !== "" || !gameActive) return;
+
+        boardState[index] = currentPlayer;
+        cell.classList.add(currentPlayer);
+        cell.textContent = currentPlayer.toUpperCase();
+
+        if (checkWin()) {
+          status.textContent = `Player ${currentPlayer.toUpperCase()} wins!`;
+          gameActive = false;
+          return;
+        } else if (boardState.every((cell) => cell !== "")) {
+          status.textContent = "It's a draw!";
+          gameActive = false;
+          return;
+        }
+
+        currentPlayer = currentPlayer === "x" ? "o" : "x";
+        status.textContent = `Player ${currentPlayer.toUpperCase()}'s turn`;
+      }
+
+      function checkWin() {
+        const winPatterns = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        return winPatterns.some((pattern) => {
+          const [a, b, c] = pattern;
+          return (
+            boardState[a] &&
+            boardState[a] === boardState[b] &&
+            boardState[a] === boardState[c]
+          );
+        });
+      }
+
+      function restartGame() {
+        boardState = ["", "", "", "", "", "", "", "", ""];
+        currentPlayer = "x";
+        gameActive = true;
+        status.textContent = `Player ${currentPlayer.toUpperCase()}'s turn`;
+        Array.from(board.children).forEach((cell) => {
+          cell.textContent = "";
+          cell.classList.remove("x", "o");
+        });
+      }
+
+      createBoard();
+      restartBtn.addEventListener("click", restartGame);
+    </script>
+  </body>
+</html>
